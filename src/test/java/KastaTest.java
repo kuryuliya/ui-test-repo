@@ -21,9 +21,20 @@ public class KastaTest {
     private final By nextBtn = By.xpath("//button[contains(text(),'Войти')]");
     private ChromeDriver driver;
 
+    // Tany
+    private final By search = By.xpath("//div[@class='flex header__search-container']//form[@class='search']//input[@type='search']");
+    String searchWord = "джинсы";
+    private final By searchIcon = By.xpath("//button[@type='submit']");
+    private final By clickBy = By.xpath("//*[@id='11649387:675']//*[text()='Купить']");
+    private final By alertSize = By.xpath("//div[@class='popup__content size-list-popup']//*[text()='140см']");
+    private final By addToCart = By.xpath("//a[@ts-swap-push='.header_basket']//*[@class='header_basket-title t-bold']");
+    private final By productAddCart = By.xpath("//div[@class='cart_pd-info']//a[@href='/product/11649387:675/']");
+    private final By productSearch = By.xpath("//div[@class='product__info_container']//a[@href='/product/11649387:675/']");
+
+
     @BeforeSuite
     public void setUpDriver() {
-        System.setProperty("webdriver.chrome.driver", "/home/buba/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(30000));
     }
@@ -45,8 +56,35 @@ public class KastaTest {
         assertTrue(driver.findElement(verificationLocator).isDisplayed(), "An user is unauthorized");
     }
 
+    // Tany
+    @Test
+    public void addToCartTest() {
+
+        driver.get(BASE_URL);
+        driver.findElement(selectRuLanguage).click();
+        driver.findElement(search).sendKeys(searchWord);
+        driver.findElement(searchIcon).click();
+        String productSearchText = driver.findElement(productSearch).toString();
+        System.out.println(productSearchText);
+        driver.findElement(clickBy).click();
+        driver.findElement(alertSize).click();
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        driver.findElement(addToCart).click();
+        String productAddCartText = driver.findElement(productAddCart).toString();
+        System.out.println(productAddCartText);
+        assertTrue(productAddCartText.contains("/product/11649387:675/") && productSearchText.contains("/product/11649387:675/"), "Items in the cart does not coincide with the selected");
+
+    }
+
     @AfterSuite
     public void quitDriver() {
         driver.quit();
     }
+
+
+
 }
