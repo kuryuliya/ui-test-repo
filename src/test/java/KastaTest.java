@@ -27,7 +27,7 @@ public class KastaTest {
 
     // Tany
     private final By search = By.xpath("//div[@class='flex header__search-container']//form[@class='search']//input[@type='search']");
-    String searchWord = "джинсы";
+    String searchWord = "218631605";
     private final By searchIcon = By.xpath("//button[@type='submit']");
     private final By clickBy = By.xpath("//*[@id='11649387:675']//*[text()='Купить']");
     private final By alertSize = By.xpath("//div[@class='popup__content size-list-popup']//*[text()='140см']");
@@ -82,7 +82,7 @@ public class KastaTest {
         driver.findElement(addToCart).click();
         String productAddCartText = driver.findElement(productAddCart).toString();
         System.out.println(productAddCartText);
-               assertTrue(productAddCartText.contains("/product/11649387:675/") && productSearchText.contains("/product/11649387:675/"), "Items in the cart does not coincide with the selected");
+        assertTrue(productAddCartText.contains("/product/11649387:675/") && productSearchText.contains("/product/11649387:675/"), "Items in the cart does not coincide with the selected");
 
     }
 
