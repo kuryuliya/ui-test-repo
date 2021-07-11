@@ -35,6 +35,7 @@ public class KastaTest {
     private final By Press_serch = By.xpath("//button[@type='submit']");
     private final By Press_Buy = By.xpath("//*[@style='order:0']//*[text()='Купить']");
     private final By Select_size = By.xpath("//*[@class='size_list popup_size-list']//button[1]");
+    private final By Basket = By.xpath("//*[@href='/basket/']//*[text()='Корзина']");
 
     @BeforeSuite
     public void setUpDriver() {
@@ -82,39 +83,27 @@ public class KastaTest {
     @Test
     public void CheckUserBasketKasta() {
 
-     var verificationLocatorByTshort = By.xpath("//*[@style='order:0']//div[@class='product__img']//a[@href='/product/11716758:584/']");
+        String link_contain = "11716758";
+        var verificationLocator = By.xpath("//*[@class='cart_pd-info']//a[@href='/product/11716758:584/']");//xpath того что в карзине
 
-        driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
 
         driver.get(BASE_URL);
         driver.findElement(selectRuLanguage).click();
-        driver.findElement(Type_tshort).sendKeys("Футболка");
+        driver.findElement(Type_tshort).sendKeys("220386025");
         driver.findElement(Press_serch).click();
-
-      //var Check= driver.findElement(verificationLocatorByTshort).toString(); //падает тут т.к. меняется xpach
-
         driver.findElement(Press_Buy).click();
         driver.findElement(Select_size).click();
-
-
 //        WebElement element = (new WebDriverWait(driver, Duration.ofSeconds(100)))
 //            .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@href='/basket/']//*[text()='Корзина']")));
-
-
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        driver.findElement(Basket).click();
 
-        driver.findElement(By.xpath("//*[@href='/basket/']//*[text()='Корзина']")).click();
-
-
-//      var verificationLocatorByTshort2 = By.xpath("//*[@class='cart_item_descr']//a");//xpath того что в карзине
-//      var Check2 = driver.findElement(verificationLocatorByTshort2).toString();
-
-
-//      assertTrue(Check2.contains("gdgd") && Check.contains("gdgd") ,"Tshirt is not match");
+        var Check2 = driver.findElement(verificationLocator).toString();
+      assertTrue(Check2.contains(link_contain) ,"Tshirt is not match");
 
     }
 
