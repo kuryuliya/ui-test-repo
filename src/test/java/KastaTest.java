@@ -4,12 +4,12 @@ import static org.testng.Assert.assertTrue;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterSuite;
@@ -31,11 +31,12 @@ public class KastaTest {
     private ChromeDriver driver;
 
     //Jeny
-    private final By Type_tshort = By.xpath("//div[@class='flex header__search-container']//form[@class='search']//input[@type='search']");
-    private final By Press_serch = By.xpath("//button[@type='submit']");
-    private final By Press_Buy = By.xpath("//*[@style='order:0']//*[text()='Купить']");
-    private final By Select_size = By.xpath("//*[@class='size_list popup_size-list']//button[1]");
-    private final By Basket = By.xpath("//*[@href='/basket/']//*[text()='Корзина']");
+    private final By typeTshort = By.xpath("//div[@class='flex header__search-container']//form[@class='search']//input[@type='search']");
+    private final By pressSerch = By.xpath("//button[@type='submit']");
+    private final By pressBuy = By.xpath("//*[@style='order:0']//*[text()='Купить']");
+    private final By selectsize = By.xpath("//*[@class='size_list popup_size-list']//button[1]");
+    private final By closeWindow = By.xpath("//div[@class='msg']//*[@ts-action='remove']");
+    private final By basket = By.xpath("//*[@href='/basket/']");
 
     @BeforeSuite
     public void setUpDriver() {
@@ -81,34 +82,28 @@ public class KastaTest {
     }
 
     @Test
-    public void CheckUserBasketKasta() {
+    public void checkUserBasketKasta() {
 
-        String link_contain = "11716758";
-        var verificationLocator = By.xpath("//*[@class='cart_pd-info']//a[@href='/product/11716758:584/']");//xpath того что в карзине
+        var ChoiseLink =By.xpath("//*[@class='product__img']//a");
+        var BasketLink = By.xpath("//*[@class='cart_pd-info']//a");
 
 
         driver.get(BASE_URL);
         driver.findElement(selectRuLanguage).click();
-        driver.findElement(Type_tshort).sendKeys("220386025");
-        driver.findElement(Press_serch).click();
-        driver.findElement(Press_Buy).click();
-        driver.findElement(Select_size).click();
-//        WebElement element = (new WebDriverWait(driver, Duration.ofSeconds(100)))
-//            .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@href='/basket/']//*[text()='Корзина']")));
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        driver.findElement(Basket).click();
+        driver.findElement(typeTshort).sendKeys("220386025");
+        driver.findElement(pressSerch).click();
+        var GetAtributeChoiseLink =driver.findElement(ChoiseLink).getAttribute("href");
+        driver.findElement(pressBuy).click();
+        driver.findElement(selectsize).click();
 
-        var Check2 = driver.findElement(verificationLocator).toString();
-      assertTrue(Check2.contains(link_contain) ,"Tshirt is not match");
+        WebElement wait = driver.findElement(closeWindow);
+new WebDriverWait(driver, Duration.ofSeconds(6)).until(ExpectedConditions.invisibilityOf(wait));
 
+        driver.findElement(basket).click();
+
+        var GetAtributeBasketLink = driver.findElement(BasketLink).getAttribute("href");
+    assertEquals(GetAtributeBasketLink,GetAtributeChoiseLink, "Tshort is not same");
     }
-
-
-
 
     @AfterSuite
     public void quitDriver() {
