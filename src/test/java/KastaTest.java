@@ -102,7 +102,7 @@ new WebDriverWait(driver, Duration.ofSeconds(6)).until(ExpectedConditions.invisi
         driver.findElement(basket).click();
 
         var GetAtributeBasketLink = driver.findElement(BasketLink).getAttribute("href");
-    assertEquals(GetAtributeBasketLink,GetAtributeChoiseLink, "Tshort is not same");
+    assertEquals(GetAtributeBasketLink,GetAtributeChoiseLink, "Tshort is not same as at the basket");
     }
 
     @AfterSuite
