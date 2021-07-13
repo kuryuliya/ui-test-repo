@@ -1,3 +1,4 @@
+import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOf;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -31,13 +32,12 @@ public class KastaTest {
 
     // Tany
     private final By search = By.xpath("//*[@class='search_input']");
-    String searchWord = "218631605";
     private final By searchIcon = By.xpath("//*[@class='search__btn']");
     private final By clickBy = By.xpath("//*[@class='w-full box-border t-center catalog__add-to-cart']");
     private final By alertSize = By.xpath("//button[@value='2423014060']");
     private final By addToCart = By.xpath("//*[@class='header_basket']");
-    private final By productAddCart = By.xpath("//div[@class='cart_pd-info']//a[@href='/product/11649387:675/']");
-    private final By productSearch = By.xpath("//div[@class='product__info_container']//a[@href='/product/11649387:675/']");
+    private final By productAddCart = By.xpath("//a[@href='/product/11649387:675/']");
+    private final By productSearch = By.xpath("//a[@href='/product/11649387:675/']");
     private final By alertClose = By.xpath("//div[@class='msg']//*[@ts-action='remove']"); // всплывающее окно, после нажатия кнопки купить
 
 
@@ -72,23 +72,23 @@ public class KastaTest {
     @Test
     public void addToCartTest() {
 
+        String searchWord = "218631605";
         driver.get(BASE_URL);
         driver.findElement(selectRuLanguage).click();
         driver.findElement(search).sendKeys(searchWord);
         driver.findElement(searchIcon).click();
         var productSearchText = driver.findElement(productSearch).getAttribute("href"); // получаем ссылку на товар
-        System.out.println(productSearchText);
         driver.findElement(clickBy).click();
         driver.findElement(alertSize).click();
 //      driver.findElement(alertClose).click();  // закрываем всплывающее окно
+//      var alert  = driver.findElement(alertClose); // создаем элемент с переменной alertClose
 
-        var alert  = driver.findElement(alertClose); // создаем элемент с переменной alertClose
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(6));
+        wait.until (invisibilityOf(driver.findElement(alertClose)));
 
-        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.invisibilityOf(alert)); // ожидание пока не скроется элемент "всплывающее окно"
-
+//      new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.invisibilityOf(alert)); // ожидание пока не скроется элемент "всплывающее окно"
         driver.findElement(addToCart).click();
         var productAddCartText = driver.findElement(productAddCart).getAttribute("href"); // получаем ссылку на товар в корзине
-        System.out.println(productAddCartText);
         assertEquals(productAddCartText, productSearchText, "Items in the cart does not coincide with the selected"); // сравниваем  ссылки на товар
 
     }
