@@ -31,10 +31,10 @@ public class KastaTest {
     private ChromeDriver driver;
 
     //Jeny
-    private final By typeTshort = By.xpath("//div[@class='flex header__search-container']//form[@class='search']//input[@type='search']");
-    private final By pressSerch = By.xpath("//button[@type='submit']");
-    private final By pressBuy = By.xpath("//*[@style='order:0']//*[text()='Купить']");
-    private final By selectsize = By.xpath("//*[@class='size_list popup_size-list']//button[1]");
+    private final By typeTshort = By.xpath("//input[@class='search_input']");
+    private final By serchButton = By.xpath("//button[@class='search__btn']");
+    private final By buyButton = By.xpath("//*[@style='order:0']//*[text()='Купить']");
+    private final By selectSizeButton = By.xpath("//*[@class='size_list popup_size-list']//button[1]");
     private final By closeWindow = By.xpath("//div[@class='msg']//*[@ts-action='remove']");
     private final By basket = By.xpath("//*[@href='/basket/']");
 
@@ -84,24 +84,24 @@ public class KastaTest {
     @Test
     public void checkUserBasketKasta() {
 
-        var ChoiseLink =By.xpath("//*[@class='product__img']//a");
-        var BasketLink = By.xpath("//*[@class='cart_pd-info']//a");
+        var choisedItem =By.xpath("//*[@class='product__img']//a");
+        var basketLinkItem = By.xpath("//*[@class='cart_pd-info']//a");
 
 
         driver.get(BASE_URL);
         driver.findElement(selectRuLanguage).click();
         driver.findElement(typeTshort).sendKeys("220386025");
-        driver.findElement(pressSerch).click();
-        var GetAtributeChoiseLink =driver.findElement(ChoiseLink).getAttribute("href");
-        driver.findElement(pressBuy).click();
-        driver.findElement(selectsize).click();
+        driver.findElement(serchButton).click();
+        var GetAtributeChoiseLink =driver.findElement(choisedItem).getAttribute("href");
+        driver.findElement(buyButton).click();
+        driver.findElement(selectSizeButton).click();
 
         WebElement wait = driver.findElement(closeWindow);
 new WebDriverWait(driver, Duration.ofSeconds(6)).until(ExpectedConditions.invisibilityOf(wait));
 
         driver.findElement(basket).click();
 
-        var GetAtributeBasketLink = driver.findElement(BasketLink).getAttribute("href");
+        var GetAtributeBasketLink = driver.findElement(basketLinkItem).getAttribute("href");
     assertEquals(GetAtributeBasketLink,GetAtributeChoiseLink, "Tshort is not same as at the basket");
     }
 
