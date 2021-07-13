@@ -31,8 +31,8 @@ public class KastaTest {
     private ChromeDriver driver;
 
     //Jeny
-    private final By typeTshort = By.xpath("//input[@class='search_input']");
-    private final By serchButton = By.xpath("//button[@class='search__btn']");
+    private final By searchField = By.xpath("//input[@class='search_input']");
+    private final By searchButton = By.xpath("//button[@class='search__btn']");
     private final By buyButton = By.xpath("//*[@style='order:0']//*[text()='Купить']");
     private final By selectSizeButton = By.xpath("//*[@class='size_list popup_size-list']//button[1]");
     private final By closeWindow = By.xpath("//div[@class='msg']//*[@ts-action='remove']");
@@ -90,16 +90,20 @@ public class KastaTest {
 
         driver.get(BASE_URL);
         driver.findElement(selectRuLanguage).click();
-        driver.findElement(typeTshort).sendKeys("220386025");
-        driver.findElement(serchButton).click();
+        driver.findElement(searchField).sendKeys("220386025");
+        driver.findElement(searchButton).click();
         var GetAtributeChoiseLink =driver.findElement(choisedItem).getAttribute("href");
         driver.findElement(buyButton).click();
         driver.findElement(selectSizeButton).click();
 
-        WebElement wait = driver.findElement(closeWindow);
-new WebDriverWait(driver, Duration.ofSeconds(6)).until(ExpectedConditions.invisibilityOf(wait));
+
+        var wait = new WebDriverWait(driver,Duration.ofSeconds(6));
+        wait.until (ExpectedConditions.invisibilityOf(driver.findElement(closeWindow)));
+
 
         driver.findElement(basket).click();
+
+
 
         var GetAtributeBasketLink = driver.findElement(basketLinkItem).getAttribute("href");
     assertEquals(GetAtributeBasketLink,GetAtributeChoiseLink, "Tshort is not same as at the basket");
