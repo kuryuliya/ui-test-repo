@@ -39,16 +39,16 @@ public class KastaTest {
     private final By productAddCart = By.xpath("//a[@href='/product/11649387:675/']");
     private final By productSearch = By.xpath("//a[@href='/product/11649387:675/']");
     private final By alertClose = By.xpath("//div[@class='msg']//*[@ts-action='remove']"); // всплывающее окно, после нажатия кнопки купить
-
-
-
+    private WebDriverWait wait;
 
 
     @BeforeSuite
     public void setUpDriver() {
         System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
         driver = new ChromeDriver();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(30000));
+
     }
 
     @Test
@@ -72,7 +72,7 @@ public class KastaTest {
     @Test
     public void addToCartTest() {
 
-        String searchWord = "218631605";
+        var searchWord = "218631605";
         driver.get(BASE_URL);
         driver.findElement(selectRuLanguage).click();
         driver.findElement(search).sendKeys(searchWord);
@@ -80,13 +80,7 @@ public class KastaTest {
         var productSearchText = driver.findElement(productSearch).getAttribute("href"); // получаем ссылку на товар
         driver.findElement(clickBy).click();
         driver.findElement(alertSize).click();
-//      driver.findElement(alertClose).click();  // закрываем всплывающее окно
-//      var alert  = driver.findElement(alertClose); // создаем элемент с переменной alertClose
-
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(6));
-        wait.until (invisibilityOf(driver.findElement(alertClose)));
-
-//      new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.invisibilityOf(alert)); // ожидание пока не скроется элемент "всплывающее окно"
+        wait.until(invisibilityOf(driver.findElement(alertClose)));
         driver.findElement(addToCart).click();
         var productAddCartText = driver.findElement(productAddCart).getAttribute("href"); // получаем ссылку на товар в корзине
         assertEquals(productAddCartText, productSearchText, "Items in the cart does not coincide with the selected"); // сравниваем  ссылки на товар
@@ -97,7 +91,6 @@ public class KastaTest {
     public void quitDriver() {
         driver.quit();
     }
-
 
 
 }
