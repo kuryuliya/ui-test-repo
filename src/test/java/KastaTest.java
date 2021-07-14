@@ -1,46 +1,18 @@
-import static org.testng.Assert.assertEquals;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOf;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
+import static steps.BaseSteps.*;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.time.Duration;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import org.openqa.selenium.*;
-
-import java.util.concurrent.TimeUnit;
-
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
+import steps.BaseSteps;
+import steps.LoginSteps;
 
 public class KastaTest {
-
-    // Host and credentials
-    private final static String BASE_URL = "https://kasta.ua/";
-    private final static String USERNAME = "yuliya.zp1@gmail.com";
-    private final static String PASSWORD = "natasha0000";
     //    Locators
-    private final By selectRuLanguage = By.xpath("//a[@href='/lang/ru']");
-    private final By signInTab = By.xpath("//*[@class='header_profile top_menu_item']");
-    private final By loginField = By.name("email");
-    private final By passwordField = By.name("password");
-    private final By nextBtn = By.xpath("//button[contains(text(),'Войти')]");
-    private ChromeDriver driver;
-
+ private LoginSteps login = new LoginSteps();
     //Jeny
     private final By searchField = By.xpath("//input[@class='search_input']");
     private final By searchButton = By.xpath("//button[@class='search__btn']");
@@ -48,7 +20,6 @@ public class KastaTest {
     private final By selectSizeButton = By.xpath("//*[@class='size_list popup_size-list']//button[1]");
     private final By closeWindow = By.xpath("//div[@class='msg']//*[@ts-action='remove']");
     private final By basket = By.xpath("//*[@href='/basket/']");
-
     // Tany
     private final By search = By.xpath("//*[@class='search_input']");
     private final By searchIcon = By.xpath("//*[@class='search__btn']");
@@ -57,40 +28,30 @@ public class KastaTest {
     private final By addToCart = By.xpath("//*[@class='header_basket']");
     private final By productAddCart = By.xpath("//a[@href='/product/11649387:675/']");
     private final By productSearch = By.xpath("//a[@href='/product/11649387:675/']");
-    private final By alertClose = By.xpath("//div[@class='msg']//*[@ts-action='remove']"); // всплывающее окно, после нажатия кнопки купить
-    private WebDriverWait wait;
+    private final By alertClose = By
+            .xpath("//div[@class='msg']//*[@ts-action='remove']"); // всплывающее окно, после нажатия кнопки купить
 
-    @BeforeSuite
-    public void setUpDriver() {
-        System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-        driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(30000));
-
-    }
 
     @Test
     public void authorizeByValidUserToKasta() {
         var verificationLocator = By.xpath("//*[contains(text(),'Курницкя Юлия')]");
 
-        driver.get(BASE_URL);
-        driver.findElement(selectRuLanguage).click();
-        driver.findElement(signInTab).click();
-        driver.findElement(loginField).sendKeys(USERNAME);
-        driver.findElement(nextBtn).click();
-        driver.findElement(passwordField).sendKeys(PASSWORD);
-        driver.findElement(nextBtn).click();
+        login.selectRuLanguage();
+        login.clickOnSingInTab();
+        login.typeUsername(USERNAME);
+        login.clickNextButton();
+        login.typePassword(PASSWORD);
+        login.clickNextButton();
 
-        driver.get(BASE_URL + "me");
+        login.goTo("me");
 
-        assertTrue(driver.findElement(verificationLocator).isDisplayed(), "An user is unauthorized");
+        assertTrue(login.isElementDisplayed(verificationLocator), "An user is unauthorized");
     }
 
     @Test
     public void authorizeByInvalidUserToKasta() {
         var verificationLocatorEmail = By.xpath("//div[@class='auth_title']//*[@class='email']");
         var verificationErrorMessage = By.xpath("//div[@class='auth_title']");
-
 
         driver.get(BASE_URL);
         driver.findElement(selectRuLanguage).click();
@@ -119,8 +80,10 @@ public class KastaTest {
         driver.findElement(alertSize).click();
         wait.until(invisibilityOf(driver.findElement(alertClose)));
         driver.findElement(addToCart).click();
-        var productAddCartText = driver.findElement(productAddCart).getAttribute("href"); // получаем ссылку на товар в корзине
-        assertEquals(productAddCartText, productSearchText, "Items in the cart does not coincide with the selected"); // сравниваем  ссылки на товар
+        var productAddCartText = driver.findElement(productAddCart)
+                .getAttribute("href"); // получаем ссылку на товар в корзине
+        assertEquals(productAddCartText, productSearchText,
+                "Items in the cart does not coincide with the selected"); // сравниваем  ссылки на товар
 
     }
 
@@ -130,7 +93,6 @@ public class KastaTest {
         var choisedItem = By.xpath("//*[@class='product__img']//a");
         var basketLinkItem = By.xpath("//*[@class='cart_pd-info']//a");
 
-
         driver.get(BASE_URL);
         driver.findElement(selectRuLanguage).click();
         driver.findElement(searchField).sendKeys("220386025");
@@ -139,13 +101,9 @@ public class KastaTest {
         driver.findElement(buyButton).click();
         driver.findElement(selectSizeButton).click();
 
-
-        var wait = new WebDriverWait(driver, Duration.ofSeconds(6));
         wait.until(ExpectedConditions.invisibilityOf(driver.findElement(closeWindow)));
 
-
         driver.findElement(basket).click();
-
 
         var getAtributeBasketLink = driver.findElement(basketLinkItem).getAttribute("href");
         assertEquals(getAtributeBasketLink, getAtributeChoiseLink, "Tshort is not same as at the basket");
