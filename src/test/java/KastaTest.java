@@ -92,7 +92,7 @@ public class KastaTest {
         driver.findElement(selectRuLanguage).click();
         driver.findElement(searchField).sendKeys("220386025");
         driver.findElement(searchButton).click();
-        var GetAtributeChoiseLink =driver.findElement(choisedItem).getAttribute("href");
+        var getAtributeChoiseLink =driver.findElement(choisedItem).getAttribute("href");
         driver.findElement(buyButton).click();
         driver.findElement(selectSizeButton).click();
 
@@ -105,8 +105,8 @@ public class KastaTest {
 
 
 
-        var GetAtributeBasketLink = driver.findElement(basketLinkItem).getAttribute("href");
-    assertEquals(GetAtributeBasketLink,GetAtributeChoiseLink, "Tshort is not same as at the basket");
+        var getAtributeBasketLink = driver.findElement(basketLinkItem).getAttribute("href");
+    assertEquals(getAtributeBasketLink,getAtributeChoiseLink, "Tshort is not same as at the basket");
     }
 
     @AfterSuite
