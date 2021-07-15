@@ -2,13 +2,14 @@ package steps;
 
 import org.openqa.selenium.By;
 import pages.LoginPage;
+import pages.MainPage;
 
 public class LoginSteps extends BaseSteps {
 
     private LoginPage loginPage = new LoginPage();
+    private MainPage mainPage = new MainPage();
 
-    public void selectRuLanguage() {
-        driver.findElement(loginPage.selectRuLanguage).click();
+    public void selectRuLanguage() { driver.findElement(mainPage.selectRuLanguage).click();
     }
 
     public void clickOnSingInTab() {
@@ -31,7 +32,11 @@ public class LoginSteps extends BaseSteps {
         driver.get(BASE_URL + "me");
     }
 
-    public boolean isElementDisplayed(By xpath){
 
+
+    public boolean isElementDisplayed(By locator) {
+        driver.findElement(locator).click();
+        return false;
     }
+
 }
