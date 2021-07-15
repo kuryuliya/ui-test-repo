@@ -1,5 +1,7 @@
 package steps;
 
-public class BasketSteps {
+public class BasketSteps extends  BaseSteps{
+
+
 
 }

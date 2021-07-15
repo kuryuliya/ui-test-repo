@@ -2,7 +2,9 @@ import org.openqa.selenium.By;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.Test;
 import steps.LoginSteps;
+import steps.MainSteps;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static steps.BaseSteps.PASSWORD;
 import static steps.BaseSteps.USERNAME;
@@ -10,23 +12,15 @@ import static steps.BaseSteps.USERNAME;
 public class KastaTest {
     //    Locators
 
- private LoginSteps login = new LoginSteps();
-    //Jeny
-    private final By searchField = By.xpath("//input[@class='search_input']");
-    private final By searchButton = By.xpath("//button[@class='search__btn']");
-    private final By buyButton = By.xpath("//*[@style='order:0']//*[text()='Купить']");
-    private final By selectSizeButton = By.xpath("//*[@class='size_list popup_size-list']//button[1]");
-    private final By closeWindow = By.xpath("//div[@class='msg']//*[@ts-action='remove']");
-    private final By basket = By.xpath("//*[@href='/basket/']");
-    // Tany
-    private final By search = By.xpath("//*[@class='search_input']");
-    private final By searchIcon = By.xpath("//*[@class='search__btn']");
-    private final By clickBy = By.xpath("//*[@class='w-full box-border t-center catalog__add-to-cart']");
-    private final By alertSize = By.xpath("//button[@value='2423014060']");
-    private final By addToCart = By.xpath("//*[@class='header_basket']");
-    private final By productAddCart = By.xpath("//a[@href='/product/11649387:675/']");
-    private final By productSearch = By.xpath("//a[@href='/product/11649387:675/']");
-    private final By alertClose = By.xpath("//div[@class='msg']//*[@ts-action='remove']"); // всплывающее окно, после нажатия кнопки купить
+    private LoginSteps login = new LoginSteps();
+    private MainSteps main = new MainSteps();
+//    //Jeny
+//    private final By searchField = By.xpath("//input[@class='search_input']");
+//    private final By searchButton = By.xpath("//button[@class='search__btn']");
+//    private final By buyButton = By.xpath("//*[@style='order:0']//*[text()='Купить']");
+//    private final By selectSizeButton = By.xpath("//*[@class='size_list popup_size-list']//button[1]");
+//    private final By closeWindow = By.xpath("//div[@class='msg']//*[@ts-action='remove']");
+//    private final By basket = By.xpath("//*[@href='/basket/']");
 
 
     @Test
@@ -63,27 +57,38 @@ public class KastaTest {
 //        assertEquals(driver.findElement(verificationLocatorEmail).getText(), USERNAME, "Email");
 //
 //    }
-//
-//    // Tany
-//    @Test
-//    public void addToCartTest() {
-//
-//        var searchWord = "218631605";
-//        driver.get(BASE_URL);
-//        driver.findElement(selectRuLanguage).click();
-//        driver.findElement(search).sendKeys(searchWord);
-//        driver.findElement(searchIcon).click();
-//        var productSearchText = driver.findElement(productSearch).getAttribute("href"); // получаем ссылку на товар
-//        driver.findElement(clickBy).click();
-//        driver.findElement(alertSize).click();
-//        wait.until(invisibilityOf(driver.findElement(alertClose)));
-//        driver.findElement(addToCart).click();
-//        var productAddCartText = driver.findElement(productAddCart)
-//                .getAttribute("href"); // получаем ссылку на товар в корзине
-//        assertEquals(productAddCartText, productSearchText,"Items in the cart does not coincide with the selected"); // сравниваем  ссылки на товар
-//
-//    }
-//
+
+    // Tany
+    @Test
+    public void addToCartTest() {
+
+        String searchArticle = "218631605";
+        var productAddCart = By.xpath("//a[@href='/product/11649387:675/']");
+        var productSearch = By.xpath("//a[@href='/product/11649387:675/']");
+        var attribute = "href";
+
+        main.clickSearchBox();
+        main.searchItemOfArticle(searchArticle);
+        main.clickOnSearchIcon();
+        var productSearchText = main.searchItemUrl(productSearch, attribute);
+        main.clickAddToCart();
+        main.chooseSizeItem();
+        main.waitInvisibleOfAlert();
+        main.goToCart();
+        var productAddCartText = main.searchItemUrl(productAddCart, attribute);
+        assertEquals(productAddCartText, productSearchText,"Items in the cart does not coincide with the selected"); // сравниваем  ссылки на товар
+
+
+
+
+
+
+
+
+
+
+    }
+
 //    @Test
 //    public void checkUserBasketKasta() {
 //

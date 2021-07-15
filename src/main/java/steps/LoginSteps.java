@@ -12,8 +12,7 @@ public class LoginSteps extends BaseSteps {
     public void selectRuLanguage() { driver.findElement(mainPage.selectRuLanguage).click();
     }
 
-    public void clickOnSingInTab() {
-        driver.findElement(loginPage.signInTab).click();
+    public void clickOnSingInTab() { driver.findElement(loginPage.signInTab).click();
     }
 
     public void typeUsername(String username) {

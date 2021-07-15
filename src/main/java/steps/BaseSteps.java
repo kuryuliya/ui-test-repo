@@ -12,15 +12,16 @@ public class BaseSteps {
     public final static String USERNAME = "yuliya.zp1@gmail.com";
     public final static String PASSWORD = "natasha0000";
 
-    public ChromeDriver driver = new ChromeDriver();
-    public WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));;
+    public ChromeDriver driver;
+    public WebDriverWait wait;
 
     @BeforeSuite
     public void setUpDriver() {
         System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
         ChromeDriver driver = new ChromeDriver();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));;
-//        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        ;
+
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(30000));
 
         driver.get(BASE_URL);
