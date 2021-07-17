@@ -1,18 +1,12 @@
-import org.openqa.selenium.By;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.Test;
-import steps.BaseSteps;
-import steps.LoginSteps;
-import steps.MainSteps;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class KastaTest extends BaseSteps {
+import org.openqa.selenium.By;
+import org.testng.annotations.Test;
+
+public class KastaTest extends BaseTest {
     //    Locators
 
-    private LoginSteps login = new LoginSteps();
-    private MainSteps main = new MainSteps();
 //    //Jeny
 //    private final By searchField = By.xpath("//input[@class='search_input']");
 //    private final By searchButton = By.xpath("//button[@class='search__btn']");
@@ -34,7 +28,7 @@ public class KastaTest extends BaseSteps {
         login.typePassword(PASSWORD);
         login.clickNextButton();
 
-        login.goTo("me");
+        login.goTo(BASE_URL + "me");
 
         assertTrue(login.isElementDisplayed(verificationLocator), "An user is unauthorized");
     }
@@ -61,7 +55,7 @@ public class KastaTest extends BaseSteps {
     @Test
     public void addToCartTest() {
 
-        String searchArticle = "218631605";
+        var searchArticle = "218631605";
         var productAddCart = By.xpath("//a[@href='/product/11649387:675/']");
         var productSearch = By.xpath("//a[@href='/product/11649387:675/']");
         var attribute = "href";
@@ -70,23 +64,16 @@ public class KastaTest extends BaseSteps {
         main.clickSearchBox();
         main.searchItemOfArticle(searchArticle);
         main.clickOnSearchIcon();
+
         var productSearchText = main.searchItemUrl(productSearch, attribute);
         main.clickAddToCart();
         main.chooseSizeItem();
         main.waitInvisibleOfAlert();
         main.goToCart();
         var productAddCartText = main.searchItemUrl(productAddCart, attribute);
-        assertEquals(productAddCartText, productSearchText,"Items in the cart does not coincide with the selected"); // сравниваем  ссылки на товар
 
-
-
-
-
-
-
-
-
-
+        assertEquals(productAddCartText, productSearchText,
+                "Items in the cart does not coincide with the selected"); // сравниваем  ссылки на товар
     }
 
 //    @Test
@@ -111,8 +98,4 @@ public class KastaTest extends BaseSteps {
 //        assertEquals(getAtributeBasketLink, getAtributeChoiseLink, "Tshort is not same as at the basket");
 //    }
 
-    @AfterSuite
-    public void quitDriver() {
-       login.driver.quit();
-    }
 }

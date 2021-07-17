@@ -1,14 +1,25 @@
 package steps;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import pages.LoginPage;
 import pages.MainPage;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOf;
 
-public class MainSteps extends BaseSteps {
+public class MainSteps{
 
+    private WebDriverWait wait;
+    private WebDriver driver;
     // Tany
     private MainPage mainPage = new MainPage();
+
+
+    public MainSteps(WebDriver driver, WebDriverWait wait){
+        this.driver = driver;
+        this.wait = wait;
+    }
 
     public void selectRuLanguage() {
         driver.findElement(mainPage.selectRuLanguage).click();
@@ -27,9 +38,7 @@ public class MainSteps extends BaseSteps {
     }
 
     public String searchItemUrl(By search, String href) {
-        String text = driver.findElement(search).getAttribute(href);
-        return text;
-
+        return driver.findElement(search).getAttribute(href);
     }
 
     public void clickAddToCart() {
