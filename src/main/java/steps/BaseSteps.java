@@ -19,8 +19,9 @@ public class BaseSteps {
     public void setUpDriver() {
         System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
         ChromeDriver driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        ;
+
+         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
 
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(30000));
 

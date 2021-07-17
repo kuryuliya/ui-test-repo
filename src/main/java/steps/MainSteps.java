@@ -10,8 +10,12 @@ public class MainSteps extends BaseSteps {
     // Tany
     private MainPage mainPage = new MainPage();
 
-    public void clickSearchBox() {
+    public void selectRuLanguage() {
         driver.findElement(mainPage.selectRuLanguage).click();
+    }
+
+    public void clickSearchBox() {
+        driver.findElement(mainPage.search).click();
     }
 
     public void searchItemOfArticle(String searchArticle) {

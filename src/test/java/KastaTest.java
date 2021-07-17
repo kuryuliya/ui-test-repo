@@ -1,15 +1,14 @@
 import org.openqa.selenium.By;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.Test;
+import steps.BaseSteps;
 import steps.LoginSteps;
 import steps.MainSteps;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-import static steps.BaseSteps.PASSWORD;
-import static steps.BaseSteps.USERNAME;
 
-public class KastaTest {
+public class KastaTest extends BaseSteps {
     //    Locators
 
     private LoginSteps login = new LoginSteps();
@@ -67,6 +66,7 @@ public class KastaTest {
         var productSearch = By.xpath("//a[@href='/product/11649387:675/']");
         var attribute = "href";
 
+        main.selectRuLanguage();
         main.clickSearchBox();
         main.searchItemOfArticle(searchArticle);
         main.clickOnSearchIcon();
@@ -113,6 +113,6 @@ public class KastaTest {
 
     @AfterSuite
     public void quitDriver() {
-        login.driver.quit();
+       login.driver.quit();
     }
 }
