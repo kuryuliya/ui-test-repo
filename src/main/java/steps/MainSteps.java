@@ -2,6 +2,7 @@ package steps;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.LoginPage;
 import pages.MainPage;
@@ -56,5 +57,31 @@ public class MainSteps{
     public void goToCart() {
         driver.findElement(mainPage.addToCart).click();
     }
+
+
+//Jeny
+    public void searchField() {driver.findElement(mainPage.searchField).sendKeys("220386025");
+    }
+    public void searchButton (){driver.findElement(mainPage.searchButton).click();
+    }
+
+    public void buyButton (){driver.findElement(mainPage.buyButton).click();}
+    public void selectSizeButton () { driver.findElement(mainPage.selectSizeButton).click();}
+    public void invisibilityOfPopWindow(){wait.until(ExpectedConditions.invisibilityOf(driver.findElement(mainPage.closeWindow)));}
+    public void closeWindow () { driver.findElement(mainPage.closeWindow);}
+    public void basket (){driver.findElement(mainPage.basket).click(); }
+
+
+    public String getAtributeChoiseLink (){
+        String getLink1 = driver.findElement(By.xpath("//*[@class='product__img']//a")).getAttribute("href");
+        return getLink1; }
+
+
+    public String getAtributeBasketLink (){
+        String getLink = driver.findElement(By.xpath("//*[@class='cart_pd-info']//a")).getAttribute("href");
+        return getLink;}
+
+
+
 
 }

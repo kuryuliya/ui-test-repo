@@ -1,7 +1,8 @@
 package pages;
 
-public class BasketPage {
+import org.openqa.selenium.By;
 
+public class BasketPage {
 
 
 }

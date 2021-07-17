@@ -3,17 +3,10 @@ import static org.testng.Assert.assertTrue;
 
 import org.openqa.selenium.By;
 import org.testng.annotations.Test;
+import steps.MainSteps;
 
 public class KastaTest extends BaseTest {
-    //    Locators
 
-//    //Jeny
-//    private final By searchField = By.xpath("//input[@class='search_input']");
-//    private final By searchButton = By.xpath("//button[@class='search__btn']");
-//    private final By buyButton = By.xpath("//*[@style='order:0']//*[text()='Купить']");
-//    private final By selectSizeButton = By.xpath("//*[@class='size_list popup_size-list']//button[1]");
-//    private final By closeWindow = By.xpath("//div[@class='msg']//*[@ts-action='remove']");
-//    private final By basket = By.xpath("//*[@href='/basket/']");
 
 
     @Test
@@ -60,6 +53,7 @@ public class KastaTest extends BaseTest {
         var productSearch = By.xpath("//a[@href='/product/11649387:675/']");
         var attribute = "href";
 
+
         main.selectRuLanguage();
         main.clickSearchBox();
         main.searchItemOfArticle(searchArticle);
@@ -76,26 +70,28 @@ public class KastaTest extends BaseTest {
                 "Items in the cart does not coincide with the selected"); // сравниваем  ссылки на товар
     }
 
-//    @Test
-//    public void checkUserBasketKasta() {
-//
-//        var choisedItem = By.xpath("//*[@class='product__img']//a");
-//        var basketLinkItem = By.xpath("//*[@class='cart_pd-info']//a");
-//
-//        driver.get(BASE_URL);
-//        driver.findElement(selectRuLanguage).click();
-//        driver.findElement(searchField).sendKeys("220386025");
-//        driver.findElement(searchButton).click();
-//        var getAtributeChoiseLink = driver.findElement(choisedItem).getAttribute("href");
-//        driver.findElement(buyButton).click();
-//        driver.findElement(selectSizeButton).click();
-//
-//        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(closeWindow)));
-//
-//        driver.findElement(basket).click();
-//
-//        var getAtributeBasketLink = driver.findElement(basketLinkItem).getAttribute("href");
-//        assertEquals(getAtributeBasketLink, getAtributeChoiseLink, "Tshort is not same as at the basket");
-//    }
+    @Test
+    public void checkUserBasketKasta() {
+
+
+
+
+        main.selectRuLanguage();
+        main.searchField();
+        main.searchButton();
+
+       var itemLink= main.getAtributeChoiseLink();
+        System.out.println(main.getAtributeChoiseLink());
+
+        main.buyButton();
+        main.selectSizeButton();
+        main.invisibilityOfPopWindow();
+        main.basket();
+
+        var basketlink = main.getAtributeBasketLink();
+        System.out.println(main.getAtributeBasketLink());
+
+       assertEquals(itemLink, basketlink, "Tshort is not same as at the basket");
+   }
 
 }
