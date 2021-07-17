@@ -81,7 +81,7 @@ public class KastaTest extends BaseTest {
         main.searchButton();
 
        var itemLink= main.getAtributeChoiseLink();
-        System.out.println(main.getAtributeChoiseLink());
+
 
         main.buyButton();
         main.selectSizeButton();
@@ -89,7 +89,7 @@ public class KastaTest extends BaseTest {
         main.basket();
 
         var basketlink = main.getAtributeBasketLink();
-        System.out.println(main.getAtributeBasketLink());
+
 
        assertEquals(itemLink, basketlink, "Tshort is not same as at the basket");
    }
