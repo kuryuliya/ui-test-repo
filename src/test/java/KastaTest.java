@@ -3,17 +3,10 @@ import static org.testng.Assert.assertTrue;
 
 import org.openqa.selenium.By;
 import org.testng.annotations.Test;
+import steps.MainSteps;
 
 public class KastaTest extends BaseTest {
-    //    Locators
 
-//    //Jeny
-//    private final By searchField = By.xpath("//input[@class='search_input']");
-//    private final By searchButton = By.xpath("//button[@class='search__btn']");
-//    private final By buyButton = By.xpath("//*[@style='order:0']//*[text()='Купить']");
-//    private final By selectSizeButton = By.xpath("//*[@class='size_list popup_size-list']//button[1]");
-//    private final By closeWindow = By.xpath("//div[@class='msg']//*[@ts-action='remove']");
-//    private final By basket = By.xpath("//*[@href='/basket/']");
 
 
     @Test
@@ -60,6 +53,7 @@ public class KastaTest extends BaseTest {
         var productSearch = By.xpath("//a[@href='/product/11649387:675/']");
         var attribute = "href";
 
+
         main.selectRuLanguage();
         main.clickSearchBox();
         main.searchItemOfArticle(searchArticle);
@@ -76,26 +70,29 @@ public class KastaTest extends BaseTest {
                 "Items in the cart does not coincide with the selected"); // сравниваем  ссылки на товар
     }
 
-//    @Test
-//    public void checkUserBasketKasta() {
-//
-//        var choisedItem = By.xpath("//*[@class='product__img']//a");
-//        var basketLinkItem = By.xpath("//*[@class='cart_pd-info']//a");
-//
-//        driver.get(BASE_URL);
-//        driver.findElement(selectRuLanguage).click();
-//        driver.findElement(searchField).sendKeys("220386025");
-//        driver.findElement(searchButton).click();
-//        var getAtributeChoiseLink = driver.findElement(choisedItem).getAttribute("href");
-//        driver.findElement(buyButton).click();
-//        driver.findElement(selectSizeButton).click();
-//
-//        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(closeWindow)));
-//
-//        driver.findElement(basket).click();
-//
-//        var getAtributeBasketLink = driver.findElement(basketLinkItem).getAttribute("href");
-//        assertEquals(getAtributeBasketLink, getAtributeChoiseLink, "Tshort is not same as at the basket");
-//    }
+    @Test
+    public void checkUserBasketKasta() {
+
+        var searchArticle = "220386025";
+        var productSearch = By.xpath("//*[@class='product__img']//a");
+        var productAddCart = By.xpath("//*[@class='cart_pd-info']//a");
+        var attribute = "href";
+
+        main.selectRuLanguage();
+        main.clickSearchBox();
+        main.searchItemOfArticle(searchArticle);
+        main.clickOnSearchIcon();
+
+        var productSearchText = main.searchItemUrl(productSearch, attribute);
+
+        main.clickAddToCart();
+        main.chooseSizeItemTshort();
+        main.waitInvisibleOfAlert();
+        main.goToCart();
+
+        var productAddCartText = main.searchItemUrl(productAddCart, attribute);
+
+       assertEquals(productSearchText, productAddCartText, "Tshort is not same as at the basket");
+   }
 
 }

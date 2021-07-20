@@ -2,6 +2,7 @@ package steps;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.LoginPage;
 import pages.MainPage;
@@ -14,7 +15,6 @@ public class MainSteps{
     private WebDriver driver;
     // Tany
     private MainPage mainPage = new MainPage();
-
 
     public MainSteps(WebDriver driver, WebDriverWait wait){
         this.driver = driver;
@@ -47,6 +47,9 @@ public class MainSteps{
 
     public void chooseSizeItem() {
         driver.findElement(mainPage.alertSize).click();
+    }
+    public void chooseSizeItemTshort() {
+        driver.findElement(mainPage.selectSizeButton).click();
     }
 
     public void waitInvisibleOfAlert() {
