@@ -86,7 +86,7 @@ public class KastaTest extends BaseTest {
         var productSearchText = main.searchItemUrl(productSearch, attribute);
 
         main.clickAddToCart();
-        main.chooseSizeItem();
+        main.chooseSizeItemTshort();
         main.waitInvisibleOfAlert();
         main.goToCart();
 

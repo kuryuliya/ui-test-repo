@@ -11,7 +11,7 @@ public class MainPage {
     public final By addToCart = By.xpath("//*[@class='header_basket']");
     public final By alertSize = By.xpath("//button[@value='2423014060']");
     public final By alertClose = By.xpath("//div[@class='msg']//*[@ts-action='remove']"); // всплывающее окно, после нажатия кнопки купить
-
+    public final By selectSizeButton = By.xpath("//*[@class='size_list popup_size-list']//button[1]");
     }
 
 

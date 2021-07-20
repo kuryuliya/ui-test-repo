@@ -48,6 +48,9 @@ public class MainSteps{
     public void chooseSizeItem() {
         driver.findElement(mainPage.alertSize).click();
     }
+    public void chooseSizeItemTshort() {
+        driver.findElement(mainPage.selectSizeButton).click();
+    }
 
     public void waitInvisibleOfAlert() {
         wait.until(invisibilityOf(driver.findElement(mainPage.alertClose)));
