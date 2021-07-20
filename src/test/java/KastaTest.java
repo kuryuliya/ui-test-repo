@@ -73,25 +73,26 @@ public class KastaTest extends BaseTest {
     @Test
     public void checkUserBasketKasta() {
 
-
-
+        var searchArticle = "220386025";
+        var productSearch = By.xpath("//*[@class='product__img']//a");
+        var productAddCart = By.xpath("//*[@class='cart_pd-info']//a");
+        var attribute = "href";
 
         main.selectRuLanguage();
-        main.searchField();
-        main.searchButton();
+        main.clickSearchBox();
+        main.searchItemOfArticle(searchArticle);
+        main.clickOnSearchIcon();
 
-       var itemLink= main.getAtributeChoiseLink();
+        var productSearchText = main.searchItemUrl(productSearch, attribute);
 
+        main.clickAddToCart();
+        main.chooseSizeItem();
+        main.waitInvisibleOfAlert();
+        main.goToCart();
 
-        main.buyButton();
-        main.selectSizeButton();
-        main.invisibilityOfPopWindow();
-        main.basket();
+        var productAddCartText = main.searchItemUrl(productAddCart, attribute);
 
-        var basketlink = main.getAtributeBasketLink();
-
-
-       assertEquals(itemLink, basketlink, "Tshort is not same as at the basket");
+       assertEquals(productSearchText, productAddCartText, "Tshort is not same as at the basket");
    }
 
 }
